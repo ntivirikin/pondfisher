@@ -15,13 +15,21 @@ class GameMap:
             data = json.load(file)
         return data
 
-
+    
     def check_water(self, x: int, y: int) -> bool:
         if self.grid[x][y] == 1:
             return True
         return False
 
 
-    def print_map(self) -> None:
-        print(self.map_name)
-        print(self.grid)
+    def bound_check(self, x: int, y: int) -> bool:
+        if (x < 0) or (x > (self.height - 1)):
+            return False
+        
+        if (y < 0) or (y > (self.width - 1)):
+            return False
+
+        if self.check_water(x, y):
+            return False
+            
+        return True 
