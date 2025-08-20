@@ -1,19 +1,23 @@
 import utils
 
 from models.world import World
-from models.player import Player
 from models.game_map import GameMap
 
 
-def create_player(name: str) -> Player:
-    return Player(name)
+"""
+    CLASSES
+        > World: holds current map and location within it
+            - player_name, location, current_map
+        > Map: provides land and water grid 
+            - map_name, width, height, grid
+
+    STARTUP SEQUENCE
+        > User input is requested to create World object
+            - World("user_input") { player_name = user_input, current_map = default_map, location = (0, 0) }
+"""
 
 
-def create_map() -> GameMap:
-    return GameMap("./data/pond_map.json")
-
-
-# Create player, map and world
+# Create world with default game map
 def startup() -> World:
     utils.clear_console()
     try:
@@ -21,17 +25,13 @@ def startup() -> World:
     except KeyboardInterrupt as e:
         print("Thanks for playing PondFisher!")
         exit()
-    player: Player = create_player(name)
-    game_map: GameMap = create_map()
-    return World(player, game_map)
+    game_map: GameMap = GameMap("./data/pond_map.json")
+    return World(name, game_map)
 
 
+# Produces World and kicks off game loop
 if __name__ == "__main__":
 
-    # Ask for name, produce the world
     world: World = startup()
-    
-    # Go into action loop
-    world.act_loop()
 
     print("Thanks for playing PondFisher!")
